@@ -56,6 +56,8 @@ use itertools::Itertools;
 use parser::TraceEntry;
 use report::ReportBuilder;
 
+#[cfg(feature = "cachekit")]
+use crate::cache::cachekit;
 #[cfg(feature = "hashlink")]
 use crate::cache::hashlink::HashLink;
 #[cfg(any(feature = "mini-moka", feature = "moka-v08", feature = "moka-v09"))]
@@ -219,6 +221,194 @@ pub fn run_multi_threads_tiny_ufo(
 ) -> anyhow::Result<Report> {
     let cache_driver = TinyUfoCache::new(config, capacity);
     let report_builder = ReportBuilder::new("TinyUFO", capacity as _, Some(num_clients));
+    run_multi_threads(config, num_clients, cache_driver, report_builder)
+}
+
+#[cfg(feature = "cachekit")]
+pub fn run_multi_threads_cachekit_lru(
+    config: &Config,
+    capacity: usize,
+    num_clients: u16,
+) -> anyhow::Result<Report> {
+    let cache_driver = cachekit::create_lru_cache(config, capacity);
+    let report_builder = ReportBuilder::new("Cachekit LRU", capacity as _, Some(num_clients));
+    run_multi_threads(config, num_clients, cache_driver, report_builder)
+}
+
+#[cfg(feature = "cachekit")]
+pub fn run_multi_threads_cachekit_fifo(
+    config: &Config,
+    capacity: usize,
+    num_clients: u16,
+) -> anyhow::Result<Report> {
+    let cache_driver = cachekit::create_fifo_cache(config, capacity);
+    let report_builder = ReportBuilder::new("Cachekit FIFO", capacity as _, Some(num_clients));
+    run_multi_threads(config, num_clients, cache_driver, report_builder)
+}
+
+#[cfg(feature = "cachekit")]
+pub fn run_multi_threads_cachekit_lfu(
+    config: &Config,
+    capacity: usize,
+    num_clients: u16,
+) -> anyhow::Result<Report> {
+    let cache_driver = cachekit::create_lfu_cache(config, capacity);
+    let report_builder = ReportBuilder::new("Cachekit LFU", capacity as _, Some(num_clients));
+    run_multi_threads(config, num_clients, cache_driver, report_builder)
+}
+
+#[cfg(feature = "cachekit")]
+pub fn run_multi_threads_cachekit_lru_k(
+    config: &Config,
+    capacity: usize,
+    num_clients: u16,
+) -> anyhow::Result<Report> {
+    let cache_driver = cachekit::create_lru_k_cache(config, capacity);
+    let report_builder = ReportBuilder::new("Cachekit LRU-K", capacity as _, Some(num_clients));
+    run_multi_threads(config, num_clients, cache_driver, report_builder)
+}
+
+#[cfg(feature = "cachekit")]
+pub fn run_multi_threads_cachekit_s3_fifo(
+    config: &Config,
+    capacity: usize,
+    num_clients: u16,
+) -> anyhow::Result<Report> {
+    let cache_driver = cachekit::create_s3_fifo_cache(config, capacity);
+    let report_builder = ReportBuilder::new("Cachekit S3-FIFO", capacity as _, Some(num_clients));
+    run_multi_threads(config, num_clients, cache_driver, report_builder)
+}
+
+#[cfg(feature = "cachekit")]
+pub fn run_multi_threads_cachekit_two_q(
+    config: &Config,
+    capacity: usize,
+    num_clients: u16,
+) -> anyhow::Result<Report> {
+    let cache_driver = cachekit::create_two_q_cache(config, capacity);
+    let report_builder = ReportBuilder::new("Cachekit 2Q", capacity as _, Some(num_clients));
+    run_multi_threads(config, num_clients, cache_driver, report_builder)
+}
+
+#[cfg(feature = "cachekit")]
+pub fn run_multi_threads_cachekit_clock(
+    config: &Config,
+    capacity: usize,
+    num_clients: u16,
+) -> anyhow::Result<Report> {
+    let cache_driver = cachekit::create_clock_cache(config, capacity);
+    let report_builder = ReportBuilder::new("Cachekit Clock", capacity as _, Some(num_clients));
+    run_multi_threads(config, num_clients, cache_driver, report_builder)
+}
+
+#[cfg(feature = "cachekit")]
+pub fn run_multi_threads_cachekit_clock_pro(
+    config: &Config,
+    capacity: usize,
+    num_clients: u16,
+) -> anyhow::Result<Report> {
+    let cache_driver = cachekit::create_clock_pro_cache(config, capacity);
+    let report_builder = ReportBuilder::new("Cachekit Clock-PRO", capacity as _, Some(num_clients));
+    run_multi_threads(config, num_clients, cache_driver, report_builder)
+}
+
+#[cfg(feature = "cachekit")]
+pub fn run_multi_threads_cachekit_slru(
+    config: &Config,
+    capacity: usize,
+    num_clients: u16,
+) -> anyhow::Result<Report> {
+    let cache_driver = cachekit::create_slru_cache(config, capacity);
+    let report_builder = ReportBuilder::new("Cachekit SLRU", capacity as _, Some(num_clients));
+    run_multi_threads(config, num_clients, cache_driver, report_builder)
+}
+
+#[cfg(feature = "cachekit")]
+pub fn run_multi_threads_cachekit_nru(
+    config: &Config,
+    capacity: usize,
+    num_clients: u16,
+) -> anyhow::Result<Report> {
+    let cache_driver = cachekit::create_nru_cache(config, capacity);
+    let report_builder = ReportBuilder::new("Cachekit NRU", capacity as _, Some(num_clients));
+    run_multi_threads(config, num_clients, cache_driver, report_builder)
+}
+
+#[cfg(feature = "cachekit")]
+pub fn run_multi_threads_cachekit_random(
+    config: &Config,
+    capacity: usize,
+    num_clients: u16,
+) -> anyhow::Result<Report> {
+    let cache_driver = cachekit::create_random_cache(config, capacity);
+    let report_builder = ReportBuilder::new("Cachekit Random", capacity as _, Some(num_clients));
+    run_multi_threads(config, num_clients, cache_driver, report_builder)
+}
+
+
+#[cfg(feature = "cachekit")]
+pub fn run_multi_threads_cachekit_lifo(
+    config: &Config,
+    capacity: usize,
+    num_clients: u16,
+) -> anyhow::Result<Report> {
+    let cache_driver = cachekit::create_lifo_cache(config, capacity);
+    let report_builder = ReportBuilder::new("Cachekit LIFO", capacity as _, Some(num_clients));
+    run_multi_threads(config, num_clients, cache_driver, report_builder)
+}
+
+#[cfg(feature = "cachekit")]
+pub fn run_multi_threads_cachekit_heap_lfu(
+    config: &Config,
+    capacity: usize,
+    num_clients: u16,
+) -> anyhow::Result<Report> {
+    let cache_driver = cachekit::create_heap_lfu_cache(config, capacity);
+    let report_builder = ReportBuilder::new("Cachekit Heap-LFU", capacity as _, Some(num_clients));
+    run_multi_threads(config, num_clients, cache_driver, report_builder)
+}
+
+#[cfg(feature = "cachekit")]
+pub fn run_multi_threads_cachekit_mfu(
+    config: &Config,
+    capacity: usize,
+    num_clients: u16,
+) -> anyhow::Result<Report> {
+    let cache_driver = cachekit::create_mfu_cache(config, capacity);
+    let report_builder = ReportBuilder::new("Cachekit MFU", capacity as _, Some(num_clients));
+    run_multi_threads(config, num_clients, cache_driver, report_builder)
+}
+
+#[cfg(feature = "cachekit")]
+pub fn run_multi_threads_cachekit_mru(
+    config: &Config,
+    capacity: usize,
+    num_clients: u16,
+) -> anyhow::Result<Report> {
+    let cache_driver = cachekit::create_mru_cache(config, capacity);
+    let report_builder = ReportBuilder::new("Cachekit MRU", capacity as _, Some(num_clients));
+    run_multi_threads(config, num_clients, cache_driver, report_builder)
+}
+
+#[cfg(feature = "cachekit")]
+pub fn run_multi_threads_cachekit_arc(
+    config: &Config,
+    capacity: usize,
+    num_clients: u16,
+) -> anyhow::Result<Report> {
+    let cache_driver = cachekit::create_arc_cache(config, capacity);
+    let report_builder = ReportBuilder::new("Cachekit ARC", capacity as _, Some(num_clients));
+    run_multi_threads(config, num_clients, cache_driver, report_builder)
+}
+
+#[cfg(feature = "cachekit")]
+pub fn run_multi_threads_cachekit_fast_lru(
+    config: &Config,
+    capacity: usize,
+    num_clients: u16,
+) -> anyhow::Result<Report> {
+    let cache_driver = cachekit::create_fast_lru_cache(config, capacity);
+    let report_builder = ReportBuilder::new("Cachekit Fast-LRU", capacity as _, Some(num_clients));
     run_multi_threads(config, num_clients, cache_driver, report_builder)
 }
 

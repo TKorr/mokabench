@@ -108,6 +108,82 @@ async fn run_with_capacity(config: &Config, capacity: usize) -> anyhow::Result<(
         }
     }
 
+    #[cfg(feature = "cachekit")]
+    if !config.insert_once
+        && !config.size_aware
+        && !config.invalidate_entries_if
+        && !config.is_eviction_listener_enabled()
+    {
+        for num_clients in num_clients_slice {
+            let report = mokabench::run_multi_threads_cachekit_lru(config, capacity, *num_clients)?;
+            println!("{}", report.to_csv_record());
+        }
+        for num_clients in num_clients_slice {
+            let report = mokabench::run_multi_threads_cachekit_fifo(config, capacity, *num_clients)?;
+            println!("{}", report.to_csv_record());
+        }
+        for num_clients in num_clients_slice {
+            let report = mokabench::run_multi_threads_cachekit_lfu(config, capacity, *num_clients)?;
+            println!("{}", report.to_csv_record());
+        }
+        for num_clients in num_clients_slice {
+            let report = mokabench::run_multi_threads_cachekit_lru_k(config, capacity, *num_clients)?;
+            println!("{}", report.to_csv_record());
+        }
+        for num_clients in num_clients_slice {
+            let report = mokabench::run_multi_threads_cachekit_s3_fifo(config, capacity, *num_clients)?;
+            println!("{}", report.to_csv_record());
+        }
+        for num_clients in num_clients_slice {
+            let report = mokabench::run_multi_threads_cachekit_two_q(config, capacity, *num_clients)?;
+            println!("{}", report.to_csv_record());
+        }
+        for num_clients in num_clients_slice {
+            let report = mokabench::run_multi_threads_cachekit_clock(config, capacity, *num_clients)?;
+            println!("{}", report.to_csv_record());
+        }
+        for num_clients in num_clients_slice {
+            let report = mokabench::run_multi_threads_cachekit_clock_pro(config, capacity, *num_clients)?;
+            println!("{}", report.to_csv_record());
+        }
+        for num_clients in num_clients_slice {
+            let report = mokabench::run_multi_threads_cachekit_slru(config, capacity, *num_clients)?;
+            println!("{}", report.to_csv_record());
+        }
+        for num_clients in num_clients_slice {
+            let report = mokabench::run_multi_threads_cachekit_nru(config, capacity, *num_clients)?;
+            println!("{}", report.to_csv_record());
+        }
+        for num_clients in num_clients_slice {
+            let report = mokabench::run_multi_threads_cachekit_random(config, capacity, *num_clients)?;
+            println!("{}", report.to_csv_record());
+        }
+        for num_clients in num_clients_slice {
+            let report = mokabench::run_multi_threads_cachekit_lifo(config, capacity, *num_clients)?;
+            println!("{}", report.to_csv_record());
+        }
+        for num_clients in num_clients_slice {
+            let report = mokabench::run_multi_threads_cachekit_heap_lfu(config, capacity, *num_clients)?;
+            println!("{}", report.to_csv_record());
+        }
+        for num_clients in num_clients_slice {
+            let report = mokabench::run_multi_threads_cachekit_mfu(config, capacity, *num_clients)?;
+            println!("{}", report.to_csv_record());
+        }
+        for num_clients in num_clients_slice {
+            let report = mokabench::run_multi_threads_cachekit_mru(config, capacity, *num_clients)?;
+            println!("{}", report.to_csv_record());
+        }
+        for num_clients in num_clients_slice {
+            let report = mokabench::run_multi_threads_cachekit_arc(config, capacity, *num_clients)?;
+            println!("{}", report.to_csv_record());
+        }
+        for num_clients in num_clients_slice {
+            let report = mokabench::run_multi_threads_cachekit_fast_lru(config, capacity, *num_clients)?;
+            println!("{}", report.to_csv_record());
+        }
+    }
+
     #[cfg(any(feature = "mini-moka", feature = "moka-v08", feature = "moka-v09"))]
     if !config.insert_once
         && !config.invalidate_entries_if

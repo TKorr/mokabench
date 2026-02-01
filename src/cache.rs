@@ -9,6 +9,8 @@ use crate::{
 
 use async_trait::async_trait;
 
+#[cfg(feature = "cachekit")]
+pub(crate) mod cachekit;
 #[cfg(feature = "hashlink")]
 pub(crate) mod hashlink;
 #[cfg(any(feature = "mini-moka", feature = "moka-v08", feature = "moka-v09"))]
