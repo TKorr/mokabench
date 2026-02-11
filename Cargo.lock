@@ -328,11 +328,10 @@ checksum = "1fd0f2584146f6f2ef48085050886acf353beff7305ebd1ae69500e27c67f64b"
 
 [[package]]
 name = "cachekit"
-version = "0.2.0"
+version = "0.3.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "caf474b19b7e83e0d9360b84b02aa9675c637c9dc68a0467fff85d1da1786e00"
+checksum = "a67d703d5de80a949d4421753ef10669f26556823ab4773b48ec8a9069d8f52d"
 dependencies = [
- "log",
  "rustc-hash",
 ]
 

@@ -40,7 +40,7 @@ tokio = { optional = true, version = "1.25.0", features = ["rt-multi-thread", "m
 async-std = { optional = true, version = "1.12.0", features = ["attributes"] }
 
 # Cache implementations
-cachekit = { optional = true, version = "0.2.0" }
+cachekit = { optional = true, version = "0.3.0" }
 hashlink = { optional = true, version = "0.8.1" }
 mini-moka = { optional = true, version = "0.10.0" }
 quick_cache = { optional = true, version = "0.6" }

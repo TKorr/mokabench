@@ -1,5 +1,23 @@
 # Mokabench &mdash; Change Log
 
+## [Unreleased]
+
+### Added
+
+- Added support for Cachekit v0.3.0 with 11 eviction policies:
+    - LRU (Least Recently Used)
+    - FIFO (First In, First Out)
+    - LFU (Least Frequently Used)
+    - LRU-K (K=2)
+    - S3-FIFO (SIEVE + Small + Main queues)
+    - 2Q (Two Queues with probationary period)
+    - Clock (Second-Chance approximation)
+    - Clock-PRO (Scan-resistant Clock variant)
+    - SLRU (Segmented LRU)
+    - NRU (Not Recently Used)
+    - Random (baseline)
+    - Added crate feature `cachekit` to enable Cachekit benchmarks
+
 ## Version 0.10.0
 
 ### Added
