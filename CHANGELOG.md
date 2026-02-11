@@ -4,7 +4,8 @@
 
 ### Added
 
-- Added support for Cachekit v0.3.0 with 11 eviction policies:
+- Added crate feature `cachekit` to enable Cachekit benchmarks.
+- Added support for Cachekit v0.3.0 with 17 eviction policies:
     - LRU (Least Recently Used)
     - FIFO (First In, First Out)
     - LFU (Least Frequently Used)
@@ -16,7 +17,12 @@
     - SLRU (Segmented LRU)
     - NRU (Not Recently Used)
     - Random (baseline)
-    - Added crate feature `cachekit` to enable Cachekit benchmarks
+    - LIFO (Last In, First Out)
+    - Heap-LFU (LFU with heap-based eviction)
+    - MFU (Most Frequently Used)
+    - MRU (Most Recently Used)
+    - ARC (Adaptive Replacement Cache)
+    - Fast-LRU
 
 ## Version 0.10.0
 
