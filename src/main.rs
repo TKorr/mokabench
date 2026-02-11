@@ -116,73 +116,33 @@ async fn run_with_capacity(config: &Config, capacity: usize) -> anyhow::Result<(
         && config.ttl.is_none()
         && config.tti.is_none()
     {
-        for num_clients in num_clients_slice {
-            let report = mokabench::run_multi_threads_cachekit_lru(config, capacity, *num_clients)?;
-            println!("{}", report.to_csv_record());
-        }
-        for num_clients in num_clients_slice {
-            let report = mokabench::run_multi_threads_cachekit_fifo(config, capacity, *num_clients)?;
-            println!("{}", report.to_csv_record());
-        }
-        for num_clients in num_clients_slice {
-            let report = mokabench::run_multi_threads_cachekit_lfu(config, capacity, *num_clients)?;
-            println!("{}", report.to_csv_record());
-        }
-        for num_clients in num_clients_slice {
-            let report = mokabench::run_multi_threads_cachekit_lru_k(config, capacity, *num_clients)?;
-            println!("{}", report.to_csv_record());
-        }
-        for num_clients in num_clients_slice {
-            let report = mokabench::run_multi_threads_cachekit_s3_fifo(config, capacity, *num_clients)?;
-            println!("{}", report.to_csv_record());
-        }
-        for num_clients in num_clients_slice {
-            let report = mokabench::run_multi_threads_cachekit_two_q(config, capacity, *num_clients)?;
-            println!("{}", report.to_csv_record());
-        }
-        for num_clients in num_clients_slice {
-            let report = mokabench::run_multi_threads_cachekit_clock(config, capacity, *num_clients)?;
-            println!("{}", report.to_csv_record());
-        }
-        for num_clients in num_clients_slice {
-            let report = mokabench::run_multi_threads_cachekit_clock_pro(config, capacity, *num_clients)?;
-            println!("{}", report.to_csv_record());
-        }
-        for num_clients in num_clients_slice {
-            let report = mokabench::run_multi_threads_cachekit_slru(config, capacity, *num_clients)?;
-            println!("{}", report.to_csv_record());
-        }
-        for num_clients in num_clients_slice {
-            let report = mokabench::run_multi_threads_cachekit_nru(config, capacity, *num_clients)?;
-            println!("{}", report.to_csv_record());
-        }
-        for num_clients in num_clients_slice {
-            let report = mokabench::run_multi_threads_cachekit_random(config, capacity, *num_clients)?;
-            println!("{}", report.to_csv_record());
-        }
-        for num_clients in num_clients_slice {
-            let report = mokabench::run_multi_threads_cachekit_lifo(config, capacity, *num_clients)?;
-            println!("{}", report.to_csv_record());
-        }
-        for num_clients in num_clients_slice {
-            let report = mokabench::run_multi_threads_cachekit_heap_lfu(config, capacity, *num_clients)?;
-            println!("{}", report.to_csv_record());
-        }
-        for num_clients in num_clients_slice {
-            let report = mokabench::run_multi_threads_cachekit_mfu(config, capacity, *num_clients)?;
-            println!("{}", report.to_csv_record());
-        }
-        for num_clients in num_clients_slice {
-            let report = mokabench::run_multi_threads_cachekit_mru(config, capacity, *num_clients)?;
-            println!("{}", report.to_csv_record());
-        }
-        for num_clients in num_clients_slice {
-            let report = mokabench::run_multi_threads_cachekit_arc(config, capacity, *num_clients)?;
-            println!("{}", report.to_csv_record());
-        }
-        for num_clients in num_clients_slice {
-            let report = mokabench::run_multi_threads_cachekit_fast_lru(config, capacity, *num_clients)?;
-            println!("{}", report.to_csv_record());
+        type CachekitBenchFn = fn(&Config, usize, u16) -> anyhow::Result<Report>;
+
+        let cachekit_policies: &[CachekitBenchFn] = &[
+            mokabench::run_multi_threads_cachekit_lru,
+            mokabench::run_multi_threads_cachekit_fifo,
+            mokabench::run_multi_threads_cachekit_lfu,
+            mokabench::run_multi_threads_cachekit_lru_k,
+            mokabench::run_multi_threads_cachekit_s3_fifo,
+            mokabench::run_multi_threads_cachekit_two_q,
+            mokabench::run_multi_threads_cachekit_clock,
+            mokabench::run_multi_threads_cachekit_clock_pro,
+            mokabench::run_multi_threads_cachekit_slru,
+            mokabench::run_multi_threads_cachekit_nru,
+            mokabench::run_multi_threads_cachekit_random,
+            mokabench::run_multi_threads_cachekit_lifo,
+            mokabench::run_multi_threads_cachekit_heap_lfu,
+            mokabench::run_multi_threads_cachekit_mfu,
+            mokabench::run_multi_threads_cachekit_mru,
+            mokabench::run_multi_threads_cachekit_arc,
+            mokabench::run_multi_threads_cachekit_fast_lru,
+        ];
+
+        for policy_fn in cachekit_policies {
+            for num_clients in num_clients_slice {
+                let report = policy_fn(config, capacity, *num_clients)?;
+                println!("{}", report.to_csv_record());
+            }
         }
     }
 
