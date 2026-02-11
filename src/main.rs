@@ -113,6 +113,8 @@ async fn run_with_capacity(config: &Config, capacity: usize) -> anyhow::Result<(
         && !config.size_aware
         && !config.invalidate_entries_if
         && !config.is_eviction_listener_enabled()
+        && config.ttl.is_none()
+        && config.tti.is_none()
     {
         for num_clients in num_clients_slice {
             let report = mokabench::run_multi_threads_cachekit_lru(config, capacity, *num_clients)?;
